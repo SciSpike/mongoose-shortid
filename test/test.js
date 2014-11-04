@@ -41,7 +41,7 @@
         var EntitySchema = require('./entity');
         Entity = mongoose.model('Entity');
         var entity;
-        var target = 100;
+        var target = 12;
         var insertedValues = 0;
         var stime = new Date().getTime();
         var threshold = 2000;
@@ -52,6 +52,7 @@
           }).save(function(err, result) {
             if (err)
               cb(err);
+            console.log(result);
             insertedValues++;
             cb();
           });
@@ -69,7 +70,7 @@
         var OriginalEntitySchema = require('./original-entity');
         OriginalEntity = mongoose.model('OriginalEntity');
         var entity;
-        var target = 4;
+        var target = 1;
         var insertedValues = 0;
         var stime = new Date().getTime();
         var threshold = 2000;
@@ -81,7 +82,6 @@
             if (err)
               cb(err);
             insertedValues++;
-            console.log(result);
             cb();
           });
         }, function(err) {

@@ -31,14 +31,12 @@
         } ], done);
       });
 
-     
-      
-      
+
       it("should use the default genId", function(done) {
         var OriginalEntitySchema = require('./original-entity');
         OriginalEntity = mongoose.model('OriginalEntity');
         var entity;
-        var target = 4;
+        var target = 1;
         var insertedValues = 0;
         var stime = new Date().getTime();
         var threshold = 2000;

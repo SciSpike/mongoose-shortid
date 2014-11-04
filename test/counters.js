@@ -43,8 +43,7 @@ var genNum = function(alphabet, callback) {
         }
     }, function(err, result) {
         var big = bignum(result.next);
-        var value = that.bignumToString(big, alphabet);
-        callback(err, value);
+        callback(err, big);
     });
 };
 

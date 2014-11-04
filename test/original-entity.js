@@ -9,6 +9,7 @@ var Schema = mongoose.Schema;
 var schema = new Schema( {
   _id: {type: ShortId},
   name: { type: String},
+  other: {type: ShortId, required: true}
 },{collection:"originalEntityName"});
 
 
