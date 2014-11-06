@@ -6,11 +6,20 @@ var ShortId = require('../');
 var Schema = mongoose.Schema;
 
 // Definition of the schema
-var schema = new Schema( {
-  _id: {type: ShortId},
-  name: { type: String},
-  other: {type: ShortId, required: true}
-},{collection:"originalEntityName"});
+var schema = new Schema({
+    _id: {
+        type: ShortId
+    },
+    name: {
+        type: String
+    },
+    other: {
+        type: ShortId,
+        required: true
+    }
+}, {
+    collection: "originalEntityName"
+});
 
 
 // Compile the model

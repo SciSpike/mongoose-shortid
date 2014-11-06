@@ -15,31 +15,31 @@ var Schema = mongoose.Schema;
  */
 var schema = new Schema({
     // The identifier counter.
-    _id : String,
+    _id: String,
     // The next value of each counter.
-    next : {
-        type : Number,
-        "default" : 1
+    next: {
+        type: Number,
+        "default": 1
     }
 }, {
-    collection : "counters"
+    collection: "counters"
 });
 
 // Compile the model
 var Counter = mongoose.model('Counter', schema);
 var that = extend(this, genid);
 
-var genNum = function(alphabet, callback) {
-    var counter = this.counter || 'countersCollection';
+var genNum = function(options, callback) {
+    var counter = options.parent || 'countersCollection';
     return Counter.findByIdAndUpdate(counter, {
-        $inc : {
-            next : 1
+        $inc: {
+            next: 1
         }
     }, {
-        "new" : true,
-        upsert : true,
-        select : {
-            next : 1
+        "new": true,
+        upsert: true,
+        select: {
+            next: 1
         }
     }, function(err, result) {
         var big = bignum(result.next);
@@ -47,4 +47,6 @@ var genNum = function(alphabet, callback) {
     });
 };
 
-module.exports = exports = {genNum: genNum};
+module.exports = exports = {
+    genNum: genNum
+};
