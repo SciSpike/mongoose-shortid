@@ -12,8 +12,6 @@
     describe(path.basename(__filename), function() {
         before(function(done) {
             require("./mongoCfg")(function() {
-
-
                 done();
             });
         });

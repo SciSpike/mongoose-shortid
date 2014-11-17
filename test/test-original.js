@@ -12,8 +12,6 @@
     describe(path.basename(__filename), function() {
         before(function(done) {
             require("./mongoCfg")(function() {
-
-
                 done();
             });
         });
@@ -31,7 +29,6 @@
                     }
                 ], done);
             });
-
 
             it("should use the default genId", function(done) {
                 var OriginalEntitySchema = require('./original-entity');
