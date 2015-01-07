@@ -3,6 +3,10 @@
   "description": "Short Ids for mongoose",
   "author": "Jason Choy <jjwchoy@gmail.com>",
   "version": "0.4.4",
+  "maintainers": 
+    [ 'lrudi <lrudi@amchealth.com>',
+      'jkamke <jonathan.kamke@scispike.com>' ],
+
   "contributors": [
     {
       "name": "Jason Choy",
