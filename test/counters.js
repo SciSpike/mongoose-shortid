@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var ShortId = require('../lib/shortId');
+var ShortId = require('../lib/shortid');
 var genid = require('../lib/genid');
 var extend = require('util')._extend;
 var bignum = require('bignum');
