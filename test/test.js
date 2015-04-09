@@ -36,6 +36,35 @@
                 ], done);
             });
 
+
+            it("should not value aRef", function(done) {
+                var EntitySchema = require('./entity2');
+                Entity = mongoose.model('Entity2');
+                new Entity({
+                    name: 'test'
+                }).save(function(err, result) {
+                    if (err)
+                        cb(err);
+                    console.log(result);
+                    assert.ok(result._id);
+                    assert.ok(!result.aRef);
+                    done();
+                });
+            });
+            it("should not value aRef", function(done) {
+              var EntitySchema = require('./entity3');
+              Entity = mongoose.model('Entity3');
+              new Entity({
+                  name: 'test'
+              }).save(function(err, result) {
+                  if (err)
+                      cb(err);
+                  console.log(result);
+                  assert.ok(result._id);
+                  assert.ok(result.aRef);
+                  done();
+              });
+          });
             it("should being able to create multiple entities", function(done) {
                 var EntitySchema = require('./entity');
                 Entity = mongoose.model('Entity');
@@ -51,6 +80,8 @@
                     }).save(function(err, result) {
                         if (err)
                             cb(err);
+                        assert.ok(result._id);
+                        assert.ok(!result.aRef);
                         insertedValues++;
                         cb();
                     });

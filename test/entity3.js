@@ -18,15 +18,11 @@ ShortId.prototype.options = extend(ShortId.prototype, options);
 
 // Definition of the schema
 var schema = new Schema({
-    _id: {
-        type: ShortId
-    },
     name: {
         type: String
     },
     aRef: {
-      type:ShortId,
-      ref:"OriginalEntity"
+      type:ShortId
     }
 }, {
     collection: "entityName"
@@ -34,7 +30,7 @@ var schema = new Schema({
 
 
 // Compile the model
-var Entity = mongoose.model('Entity', schema);
+var Entity = mongoose.model('Entity3', schema);
 
 // Make the schema available
 exports.Entity = Entity;
