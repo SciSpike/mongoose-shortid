@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function(grunt) {
-  
+
   var loadGruntTasks = require('load-grunt-tasks')(grunt, {
       pattern: 'grunt-*',
       config: './package.json',
@@ -9,8 +9,8 @@ module.exports = function(grunt) {
   });
   var dir = null;
   var basePath = grunt.option('basePath') || "./";
-  
-  
+
+
   var config = {
     'basePath': basePath,
     'dir': dir,
@@ -28,20 +28,20 @@ module.exports = function(grunt) {
     },
     shell: {
       "publish":{
-        command:"npm publish --registry=http://npm-scispike.ddns.net",
+        command:"npm publish --registry=http://npm.scispike.com",
       },
       "pull":{
         command:"git pull"
       },
       "add-owner":{
-        command:["npm owner add",grunt.option("owner") , 'mongoose-shortid',"--registry=http://npm-scispike.ddns.net"].join(' '),
+        command:["npm owner add",grunt.option("owner") , 'mongoose-shortid',"--registry=http://npm.scispike.com"].join(' '),
       }
     }
   };
-  
+
   grunt.initConfig(config);
 
   grunt.registerTask('add-owner',["shell:add-owner"]);
-  grunt.registerTask('release-patch', ['shell:pull'].concat(['bump:patch',"shell:publish"])); 
-  grunt.registerTask('release-minor', ['shell:pull'].concat(['bump:minor',"shell:publish"])); 
+  grunt.registerTask('release-patch', ['shell:pull'].concat(['bump:patch',"shell:publish"]));
+  grunt.registerTask('release-minor', ['shell:pull'].concat(['bump:minor',"shell:publish"]));
 };
