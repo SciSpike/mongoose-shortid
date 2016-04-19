@@ -1,6 +1,5 @@
-"use strict";
-
 module.exports = function(grunt) {
+  "use strict";
 
   var loadGruntTasks = require('load-grunt-tasks')(grunt, {
       pattern: 'grunt-*',
@@ -9,7 +8,9 @@ module.exports = function(grunt) {
   });
   var dir = null;
   var basePath = grunt.option('basePath') || "./";
-
+  var registry = "--registry=http://npm.scispike.com";
+  var path = require('path');
+  var packageJson = require(path.resolve("package.json"));
 
   var config = {
     'basePath': basePath,
@@ -18,30 +19,49 @@ module.exports = function(grunt) {
       options: {
         files:"./package.json",
         commit: true,
-        commitMessage: 'Release v%VERSION%',
+        commitMessage:"Rev to v%VERSION%",
         commitFiles: ['-a'],
-        createTag:false,
         push:true,
-        pushTo:"",
-        pushTags:false
+        pushTo:"origin",
+        "prereleaseName":"pre",
+        createTag:!grunt.option('no-tag'),
+        pushTags:!grunt.option('no-tag')
       }
     },
     shell: {
       "publish":{
-        command:"npm publish --registry=http://npm.scispike.com",
+        command:["npm publish", registry].join(" "),
       },
       "pull":{
         command:"git pull"
       },
       "add-owner":{
-        command:["npm owner add",grunt.option("owner") , 'mongoose-shortid',"--registry=http://npm.scispike.com"].join(' '),
-      }
+        command:["npm owner add",grunt.option("owner"), packageJson.name, registry].join(' '),
+      },
+      "release-minor":{
+        'command':[
+           "[ $(git status | head -n 1 | awk '{ print $3 }') == 'master' ]",
+           "grunt bump:minor",
+           "grunt shell:publish",
+           "grunt bump:preminor --no-tag"
+         ].join('&&'),
+         "help":"make a new release. This must be done from the master branch."
+      },
+      "release-patch":{
+        'command':[
+           "[[ $(git status | head -n 1 | awk '{ print $3 }') =~ ^v[0-9]*\.[0-9]*$ ]]",
+           "grunt bump:patch",
+           "grunt shell:publish",
+           "grunt bump:prepatch --no-tag"
+        ].join('&&'),
+        help:"hotfix a release. You must do this from a branch named after the minor release tag like: v0.1"
+      },
     }
   };
 
   grunt.initConfig(config);
 
   grunt.registerTask('add-owner',["shell:add-owner"]);
-  grunt.registerTask('release-patch', ['shell:pull'].concat(['bump:patch',"shell:publish"]));
-  grunt.registerTask('release-minor', ['shell:pull'].concat(['bump:minor',"shell:publish"]));
+  grunt.registerTask('release-patch', ['shell:pull','shell:release-patch']);
+  grunt.registerTask('release-minor', ['shell:pull','shell:release-minor']);
 };
